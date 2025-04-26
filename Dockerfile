@@ -12,11 +12,7 @@ RUN apt update && apt install -y \
 # Install gcloud cli and add to path
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz \
     && tar -xf google-cloud-cli-linux-x86_64.tar.gz \
-    && ./google-cloud-sdk/install.sh --path-update true -q
-
-          
-# Install plugin for kubectl to work with GKE
-# RUN apt-get install google-cloud-cli-gke-gcloud-auth-plugin
+    && ./google-cloud-sdk/install.sh --path-update true -q 
 
 # Install Trivy
 RUN wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
