@@ -2,11 +2,12 @@ FROM kalilinux/kali-rolling
 
 # Install base tools
 RUN apt update && apt install -y \
-    wget curl gnupg git nano net-tools dnsutils iputils-ping \
+    wget curl gnupg git net-tools dnsutils iputils-ping \
     gobuster dirbuster seclists \
-    nmap jq python3 python3-pip \
+    nmap jq vim \
+    python3 python3-pip python3-venv pipx \
     kubectl \
-    apt-transport-https ca-certificates \ 
+    apt-transport-https ca-certificates \
     && apt clean
 
 # Install gcloud cli and add to path
@@ -23,5 +24,9 @@ RUN wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
     && apt install -y trivy \
     && apt clean
 
+# Setting working directory and staging scripts to be used after startup
 WORKDIR /htk
+COPY startup.sh .
 
+RUN mkdir tools
+COPY tools.sh tools/
