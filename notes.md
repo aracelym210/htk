@@ -5,6 +5,22 @@ Installing the `gcloud` cli took me a little bit more time than I care to admit 
 
 Overall, creating container image was pretty easy and can easily be tweaked. It remains to be seen if this containerized toolbox will be sufficient to use as opposed to a full-fledged VM for testing against Kubernetes Goat and beyond.
 
+## minikube
+- when using minikube to run k8s cluster for kubernetes goat, there was a lot of networking troubleshooting that needed to happen in order for the "attacker" docker container to be able to access resources outside of the container running on the local host. I somewhat understand that this is due to both the attacker container and the target cluster and associated resources all running on the effectively the same machine, separated by virtual networking magic. Setting up the target (kubernetes-goat) infra in GKE was a lot cleaner and simpler, but I didn't want to accidentally forget to terminate the vulnerable cluster in the cloud and thought it might be nice to play around with minikube. 
+
+### troubleshooting minikube networking
+- run `minikube ip` to get the IP address of the minikube cluster 
+- modify your desired kubeconfig file to change the custer server IP to the IP fetched via above command
+- still doesn't work... aborting to attempt to use KIND instead
+
+### cleaning up minikube
+```bash
+minikube stop
+minikube delete 
+docker system prune -a
+```
+
+
 ## References
 ### gcloud
 - [kubectl GKE auth requirements](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#gcloud_1)
